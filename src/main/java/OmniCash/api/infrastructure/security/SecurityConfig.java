@@ -29,8 +29,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/auth/**").permitAll() // Libera o cadastro
-                        .anyRequest().authenticated() // Exige token nas demais rotas
+                        .requestMatchers(HttpMethod.POST, "/OmniCash/cadastro", "/OmniCash/login").permitAll()
+                        .requestMatchers("/usuario/me/**", "/lancamento/**").authenticated()
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 

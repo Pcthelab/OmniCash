@@ -1,4 +1,4 @@
-package OmniCash.api.infrastructure.persistence;
+package OmniCash.api.infrastructure.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

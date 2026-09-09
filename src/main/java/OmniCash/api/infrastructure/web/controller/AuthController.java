@@ -1,4 +1,4 @@
-package OmniCash.api.infrastructure.web;
+package OmniCash.api.infrastructure.web.controller;
 
 import OmniCash.api.application.usecase.RegisterUserUseCase;
 import OmniCash.api.domain.model.User;
@@ -6,6 +6,7 @@ import OmniCash.api.infrastructure.security.JwtService;
 import OmniCash.api.infrastructure.web.dto.AuthResponseDTO;
 import OmniCash.api.infrastructure.web.dto.LoginRequestDTO;
 import OmniCash.api.infrastructure.web.dto.RegisterRequestDTO;
+import OmniCash.api.infrastructure.web.dto.UserResponseDTO;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/OmniCash")
 public class AuthController {
 
     private final RegisterUserUseCase registerUserUseCase;
@@ -30,14 +31,21 @@ public class AuthController {
         this.jwtService = jwtService;
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody @Valid RegisterRequestDTO request) {
+    @PostMapping("/cadastro")
+    public ResponseEntity<UserResponseDTO> register(@RequestBody @Valid RegisterRequestDTO request) {
         User registeredUser = registerUserUseCase.execute(
                 request.getName(),
                 request.getEmail(),
                 request.getPassword()
         );
-        return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser);
+
+        UserResponseDTO responseDTO = new UserResponseDTO(
+                registeredUser.getId(),
+                registeredUser.getName(),
+                registeredUser.getEmail()
+        );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
 
     @PostMapping("/login")

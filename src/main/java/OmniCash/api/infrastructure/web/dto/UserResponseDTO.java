@@ -1,28 +1,24 @@
 package OmniCash.api.infrastructure.web.dto;
-
 import OmniCash.api.domain.model.User;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserResponseDTO {
-
-    private Long id; // ou String, dependendo do tipo do ID do seu User
+    private Long id;
     private String name;
     private String email;
 
+    // Se você estiver usando o construtor que recebe a entidade User diretamente:
     public UserResponseDTO(User user) {
         this.id = user.getId();
         this.name = user.getName();
         this.email = user.getEmail();
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
 }
+
+
+

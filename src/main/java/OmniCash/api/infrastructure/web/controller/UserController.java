@@ -1,4 +1,4 @@
-package OmniCash.api.infrastructure.web;
+package OmniCash.api.infrastructure.web.controller;
 
 import OmniCash.api.domain.model.User;
 import OmniCash.api.domain.repository.UserRepository;
@@ -15,21 +15,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/usuario")
 public class UserController {
 
     private final UserRepository userRepository;
 
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
-    }
-
-    @GetMapping
-    public ResponseEntity<List<UserResponseDTO>> getAll() {
-        List<UserResponseDTO> users = userRepository.findAll().stream()
-                .map(UserResponseDTO::new)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(users);
     }
 
     @GetMapping("/me")

@@ -2,3 +2,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+      api:
+        security:
+          token:
+            secret: 4f3Z9vL8qR2wX7yB1nM6pK5jH3dF8gS2tC6vX9zQ4wE7rT1yU3iO5pA8sD2fG4hJ6
