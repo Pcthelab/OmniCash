@@ -1,0 +1,124 @@
+:root {
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #233a32;
+  background: #f6f7f3;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 400;
+  font-size: 14px;
+  --green: #285c46;
+  --ink: #233a32;
+  --muted: #7a847e;
+  --border: #e5e9e2;
+  --paper: #fff;
+  --lime: #d5e7aa;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  min-width: 320px;
+}
+button,
+input,
+select {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+button,
+select,
+input {
+  transition:
+    background 0.16s,
+    border-color 0.16s,
+    box-shadow 0.16s;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #86ad72;
+  outline-offset: 3px;
+}
+input,
+select {
+  color: var(--ink);
+  border: 1px solid #dce2d8;
+  border-radius: 8px;
+  background: white;
+  padding: 12px 14px;
+  min-width: 0;
+  max-width: 100%;
+  outline: none;
+}
+input:focus,
+select:focus {
+  border-color: #64886c;
+  box-shadow: 0 0 0 3px #64886c1a;
+}
+input:disabled {
+  background: #f2f4ef;
+  color: #68766c;
+}
+input::placeholder {
+  color: #929a93;
+}
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+h1,
+h2,
+h3 {
+  font-weight: 600;
+  letter-spacing: -0.04em;
+}
+p {
+  color: var(--muted);
+  line-height: 1.7;
+}
+svg {
+  flex-shrink: 0;
+}
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  color: inherit;
+}
+small {
+  color: var(--muted);
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+::selection {
+  background: #c9e0a8;
+  color: #173c2a;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

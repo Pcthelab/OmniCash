@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/omnicash_test
+    username: myuser
+    password: secret
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+api:
+  security:
+    token:
+      secret: 7f9c3b8e2a1d4f6e8c0b2a4d6f8e0c2a4f6b8d0e2a4c6e8f0b2d4f6a8c0e2a4b
