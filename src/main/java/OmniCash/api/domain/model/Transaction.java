@@ -1,5 +1,7 @@
 package OmniCash.api.domain.model;
 
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,4 +20,7 @@ public class Transaction {
     private TransactionType type;
     private LocalDate date;
     private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 }

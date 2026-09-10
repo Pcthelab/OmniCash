@@ -4,9 +4,12 @@ import OmniCash.api.domain.model.TransactionType;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Data
 public class TransactionRequestDTO {
 
     @NotBlank(message = "A descrição é obrigatória")
@@ -22,36 +25,6 @@ public class TransactionRequestDTO {
     @NotNull(message = "A data é obrigatória")
     private LocalDate date;
 
-    // Getters e Setters
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    public TransactionType getType() {
-        return type;
-    }
-
-    public void setType(TransactionType type) {
-        this.type = type;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
+    @NotNull(message = "A categoria é obrigatória")
+    private Long categoryId;
 }

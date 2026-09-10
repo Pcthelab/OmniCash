@@ -1,12 +1,21 @@
 package OmniCash.api.infrastructure.persistence.entity;
 
+import OmniCash.api.domain.model.Category;
+import OmniCash.api.domain.model.Transaction;
 import OmniCash.api.domain.model.TransactionType;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "transactions")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TransactionEntity {
 
     @Id
@@ -29,41 +38,44 @@ public class TransactionEntity {
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
-    // Construtores
-    public TransactionEntity() {}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private CategoryEntity category;
 
-    public TransactionEntity(OmniCash.api.domain.model.Transaction domain) {
+    public TransactionEntity(Transaction domain) {
         this.id = domain.getId();
         this.description = domain.getDescription();
         this.amount = domain.getAmount();
         this.type = domain.getType();
         this.date = domain.getDate();
         this.userId = domain.getUserId();
+        if (domain.getCategory() != null) {
+            this.category = new CategoryEntity(
+                    domain.getCategory().getId(),
+                    domain.getCategory().getName(),
+                    domain.getCategory().getType()
+            );
+        }
     }
 
-    // Método para converter de volta para o modelo de Domínio
-    public OmniCash.api.domain.model.Transaction toDomain() {
-        return new OmniCash.api.domain.model.Transaction(
+    public Transaction toDomain() {
+        Category categoryDomain = null;
+        if (this.category != null) {
+            categoryDomain = new Category(
+                    this.category.getId(),
+                    this.category.getName(),
+                    this.category.getType()
+            );
+        }
+
+        return new Transaction(
                 this.id,
                 this.description,
                 this.amount,
                 this.type,
                 this.date,
-                this.userId
+                this.userId,
+                categoryDomain
         );
     }
-
-    // Getters e Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-    public BigDecimal getAmount() { return amount; }
-    public void setAmount(BigDecimal amount) { this.amount = amount; }
-    public TransactionType getType() { return type; }
-    public void setType(TransactionType type) { this.type = type; }
-    public LocalDate getDate() { return date; }
-    public void setDate(LocalDate date) { this.date = date; }
-    public Long getUserId() { return userId; }
-    public void setUserId(Long userId) { this.userId = userId; }
 }

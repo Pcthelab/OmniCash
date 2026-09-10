@@ -3,9 +3,9 @@ package OmniCash.api.infrastructure.web.controller;
 import OmniCash.api.application.usecase.CreateTransactionUseCase;
 import OmniCash.api.application.usecase.GetBalanceUseCase;
 import OmniCash.api.application.usecase.UpdateTransactionUseCase;
+import OmniCash.api.domain.gateway.TransactionRepositoryGateway;
 import OmniCash.api.domain.model.BalanceSummary;
 import OmniCash.api.domain.model.Transaction;
-import OmniCash.api.domain.repository.TransactionRepository;
 import OmniCash.api.domain.repository.UserRepository;
 import OmniCash.api.infrastructure.web.dto.BalanceResponseDTO;
 import OmniCash.api.infrastructure.web.dto.TransactionRequestDTO;
@@ -31,12 +31,12 @@ public class TransactionController {
     private final GetBalanceUseCase getBalanceUseCase;
     private final CreateTransactionUseCase createTransactionUseCase;
     private final UpdateTransactionUseCase updateTransactionUseCase;
-    private final TransactionRepository transactionRepository;
+    private final TransactionRepositoryGateway transactionRepository;
     private final UserRepository userRepository;
 
     public TransactionController(GetBalanceUseCase getBalanceUseCase, CreateTransactionUseCase createTransactionUseCase,
                                  UpdateTransactionUseCase updateTransactionUseCase,
-                                 TransactionRepository transactionRepository,
+                                 TransactionRepositoryGateway transactionRepository,
                                  UserRepository userRepository) {
         this.getBalanceUseCase = getBalanceUseCase;
         this.createTransactionUseCase = createTransactionUseCase;
@@ -60,7 +60,8 @@ public class TransactionController {
                 request.getDescription(),
                 request.getAmount(),
                 request.getType(),
-                request.getDate()
+                request.getDate(),
+                request.getCategoryId()
         );
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new TransactionResponseDTO(transaction));
@@ -86,9 +87,15 @@ public class TransactionController {
 
     @GetMapping("/balance")
     public ResponseEntity<BalanceResponseDTO> getBalance(Authentication authentication) {
-        User authenticatedUser = (User) authentication.getPrincipal();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
 
-        BalanceSummary summary = getBalanceUseCase.execute(authenticatedUser.getId());
+        String email = authentication.getName();
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        BalanceSummary summary = getBalanceUseCase.execute(user.getId());
 
         BalanceResponseDTO response = new BalanceResponseDTO(
                 summary.getTotalIncome(),

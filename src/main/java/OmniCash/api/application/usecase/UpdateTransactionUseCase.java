@@ -1,8 +1,8 @@
 package OmniCash.api.application.usecase;
 
+import OmniCash.api.domain.gateway.TransactionRepositoryGateway;
 import OmniCash.api.domain.model.Transaction;
 import OmniCash.api.domain.model.TransactionType;
-import OmniCash.api.domain.repository.TransactionRepository;
 import OmniCash.api.domain.repository.UserRepository;
 import OmniCash.api.infrastructure.web.dto.UpdateTransactionDTO;
 import org.springframework.stereotype.Service;
@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class UpdateTransactionUseCase {
 
-    private final TransactionRepository transactionRepository;
+    private final TransactionRepositoryGateway transactionRepository;
     private final UserRepository userRepository;
 
-    public UpdateTransactionUseCase(TransactionRepository transactionRepository, UserRepository userRepository) {
+    public UpdateTransactionUseCase(TransactionRepositoryGateway transactionRepository, UserRepository userRepository) {
         this.transactionRepository = transactionRepository;
         this.userRepository = userRepository;
     }

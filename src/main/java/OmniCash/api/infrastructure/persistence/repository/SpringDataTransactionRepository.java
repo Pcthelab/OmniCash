@@ -15,9 +15,9 @@ public interface SpringDataTransactionRepository extends JpaRepository<Transacti
 
     Optional<TransactionEntity> findByIdAndUserId(Long id, Long userId);
 
-    @Query("SELECT COALESCE(SUM(t.amount), 0) FROM TransactionEntity t WHERE t.user.id = :userId AND t.type = 'INCOME'")
+    @Query("SELECT COALESCE(SUM(t.amount), 0) FROM TransactionEntity t WHERE t.userId = :userId AND t.type = 'INCOME'")
     BigDecimal sumIncomesByUserId(@Param("userId") Long userId);
 
-    @Query("SELECT COALESCE(SUM(t.amount), 0) FROM TransactionEntity t WHERE t.user.id = :userId AND t.type = 'EXPENSE'")
+    @Query("SELECT COALESCE(SUM(t.amount), 0) FROM TransactionEntity t WHERE t.userId = :userId AND t.type = 'EXPENSE'")
     BigDecimal sumExpensesByUserId(@Param("userId") Long userId);
 }
