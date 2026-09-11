@@ -6,7 +6,7 @@ Gestão financeira pessoal com receitas, despesas e relatórios em uma interface
 responsiva. MVP funcional construído com React 19, Vite 8, Java 21, Spring Boot 4
 e PostgreSQL.
 
-**Created by [PcTheLab](https://github.com/Pcthelab)** · [LinkedIn](https://www.linkedin.com/in/pcthelab)
+**Created by [PctheLab](https://github.com/Pcthelab)** · [LinkedIn](https://www.linkedin.com/in/pcthelab)
 
 [Arquitetura](docs/architecture.md) · [API HTTP](docs/api.md) · [Desenvolvimento e entrega](docs/development.md)
 
