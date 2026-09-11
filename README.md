@@ -148,8 +148,10 @@ Essa suíte ainda não cobre todas as regras de negócio.
 
 A base permite demonstrar o fluxo financeiro completo. Migrações de banco,
 segredos por ambiente, backups, observabilidade e testes mais abrangentes são
-próximos passos para uma operação comercial. Recuperação de senha, metas,
-recorrência e integração bancária não fazem parte do MVP implementado.
+próximos passos para uma operação comercial. Metas, recorrência e integração
+bancária não fazem parte do MVP implementado. Recuperação de senha e login com
+Google estão preparados e dependem de configuração externa. Consulte a
+[revisão do MVP e guia de ativação](docs/mvp-review.md).
 
 ## Autor e contato
 

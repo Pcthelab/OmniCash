@@ -1439,6 +1439,21 @@ dialog > p {
     width: 100%;
   }
 }
+.password-group { display: flex; flex-direction: column; gap: 8px; }
+.password-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.password-field input { flex: 1; width: 100%; }
+.password-field button { min-height: 44px; flex-shrink: 0; }
+.password-rules { list-style: none; padding: 0; margin: -4px 0 0; color: #66736b; font-size: 12px; line-height: 1.7; }
+.password-rules .met { color: #285c46; }
+.forgot-password { align-self: flex-end; min-height: 44px; }
+.auth-back { margin-top: 16px; min-height: 44px; }
+.google-sign-in { margin-top: 22px; }
+.auth-divider { display: block; text-align: center; color: #66736b; margin-bottom: 16px; font-size: 12px; }
+.google-sign-in > div { display: flex; justify-content: center; }
 /* Keep hidden table labels inside their scroll container. */
 th {
   position: relative;
@@ -1516,4 +1531,58 @@ th {
   .table-footer > span {
     font-size: 9px;
   }
+}
+
+/* Comfortable touch targets and readable forms, without changing desktop layout. */
+@media (max-width: 720px) {
+  input, select, .period-control select { font-size: 16px; min-height: 48px; }
+  .filters select, .search-input input { font-size: 16px; }
+  button.primary, button.secondary, .icon-button, .segmented button { min-height: 44px; }
+  .icon-button { min-width: 44px; }
+  .auth-form-area { padding: 24px 20px max(24px, env(safe-area-inset-bottom)); gap: 28px; justify-content: flex-start; }
+  .auth-form-card h2 { font-size: 30px; }
+  .auth-form-card > p { font-size: 14px; }
+  .sidebar { height: calc(76px + env(safe-area-inset-bottom)); padding: 6px max(8px, env(safe-area-inset-right)) env(safe-area-inset-bottom) max(8px, env(safe-area-inset-left)); }
+  .sidebar nav button { font-size: 11px; min-height: 60px; }
+  .workspace { padding: 24px max(16px, env(safe-area-inset-right)) calc(100px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); }
+  .page-heading p, .panel-heading p { font-size: 13px; }
+  .page-heading .eyebrow { font-size: 10px; }
+  .period-toolbar { flex-wrap: wrap; }
+  .period-control { min-width: 0; max-width: 100%; }
+  .period-toolbar > .text-button { font-size: 13px; min-height: 44px; }
+  .stat-card { min-width: 0; }
+  .stat-card > div { font-size: 12px; }
+  .stat-card > strong { font-size: clamp(18px, 4.8vw, 27px); white-space: normal; overflow-wrap: anywhere; }
+  .stat-card > small { font-size: 11px; }
+  .panel-heading { flex-wrap: wrap; gap: 12px; }
+  .panel-heading .secondary { font-size: 12px; min-height: 44px; }
+  .filters { gap: 10px; }
+  .filters select { min-width: 0; flex-basis: calc(50% - 5px); }
+  .transaction-description { align-items: flex-start; }
+  .transaction-description > div { min-width: 0; }
+  .transaction-description strong { font-size: 14px; white-space: normal; overflow-wrap: anywhere; }
+  .transaction-description small, .date-cell, .category-tag { font-size: 12px; }
+  .category-tag { white-space: normal; overflow-wrap: anywhere; }
+  td:nth-child(4) { font-size: 13px; max-width: 145px; white-space: normal; overflow-wrap: anywhere; }
+  .table-footer > span { font-size: 12px; }
+  .table-footer > div { flex-wrap: wrap; }
+  .category-legend { padding: 5px 16px 24px; }
+  .category-legend > div { font-size: 12px; min-width: 0; overflow-wrap: anywhere; }
+  .toast { bottom: calc(92px + env(safe-area-inset-bottom)); max-width: calc(100vw - 32px); }
+  dialog { width: 100%; max-width: calc(100% - 24px); max-height: calc(100dvh - 24px); padding: 20px; overscroll-behavior: contain; }
+  .modal-heading h2 { font-size: 24px; }
+  .modal-actions { flex-wrap: wrap; }
+  .modal-actions button { flex: 1; }
+}
+@media (max-width: 380px) {
+  .form-row { grid-template-columns: 1fr; }
+  .filters select { flex-basis: 100%; width: 100%; }
+  .sidebar nav button { font-size: 10px; }
+  .category-legend { grid-template-columns: 1fr; }
+  tbody tr { grid-template-columns: minmax(0, 1fr); }
+  td:nth-child(4) { grid-column: 1; grid-row: 4; max-width: none; text-align: left; padding-left: 38px; font-size: 15px; }
+  td:nth-child(5) { grid-column: 1; grid-row: 5; }
+}
+@media (max-width: 480px) {
+  .filters select { flex-basis: 100%; width: 100%; }
 }

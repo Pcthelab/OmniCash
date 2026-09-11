@@ -32,7 +32,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/OmniCash/cadastro", "/OmniCash/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/OmniCash/auth-options").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/OmniCash/cadastro", "/OmniCash/login", "/OmniCash/esqueci-senha", "/OmniCash/redefinir-senha", "/OmniCash/google").permitAll()
                         .requestMatchers("/usuario/me/**", "/lancamento/**").authenticated()
                         .anyRequest().authenticated()
                 )

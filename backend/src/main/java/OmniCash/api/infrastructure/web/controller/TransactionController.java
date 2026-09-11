@@ -110,7 +110,7 @@ public class TransactionController {
     @PatchMapping("/{id}")
     public ResponseEntity<TransactionResponseDTO> patchTransaction(
             @PathVariable Long id,
-            @RequestBody UpdateTransactionDTO dto,
+            @RequestBody @Valid UpdateTransactionDTO dto,
             Principal principal) {
 
         Transaction updated = updateTransactionUseCase.execute(id, principal.getName(), dto);

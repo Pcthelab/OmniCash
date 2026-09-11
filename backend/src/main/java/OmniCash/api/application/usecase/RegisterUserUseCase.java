@@ -18,6 +18,7 @@ public class RegisterUserUseCase {
     }
 
     public User execute(String name, String email, String password) {
+        OmniCash.api.infrastructure.security.PasswordPolicy.validate(password);
         if (userRepository.findByEmail(email).isPresent()) {
             throw new EmailAlreadyExistsException("E-mail já cadastrado!");
         }

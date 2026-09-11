@@ -59,6 +59,10 @@ export async function api(
   return data;
 }
 export const endpoints = {
+  authOptions: (signal) => api("/OmniCash/auth-options", { publicRequest: true, signal }),
+  forgotPassword: (body) => api("/OmniCash/esqueci-senha", { method: "POST", body, publicRequest: true }),
+  resetPassword: (body) => api("/OmniCash/redefinir-senha", { method: "POST", body, publicRequest: true }),
+  google: (body) => api("/OmniCash/google", { method: "POST", body, publicRequest: true }),
   login: (body) =>
     api("/OmniCash/login", { method: "POST", body, publicRequest: true }),
   register: (body) =>

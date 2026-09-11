@@ -2,7 +2,7 @@
 
 Base local: `http://localhost:8080`. Corpos usam JSON e
 `Content-Type: application/json`. Os caminhos diferenciam maiúsculas e minúsculas.
-Somente cadastro e login são públicos. Demais rotas exigem
+Cadastro, login, opções de autenticação, recuperação de senha e login Google são públicos. Demais rotas exigem
 `Authorization: Bearer <token>`.
 
 | Método | Caminho | Entrada | Sucesso |
@@ -76,3 +76,18 @@ nem todo recurso ausente é convertido em 404 atualmente.
 Exclusão de conta existe somente na API. Não há contrato de cascata documentado;
 o smoke test remove seus lançamentos antes da conta. Não há refresh token,
 recuperação de senha, integração bancária nem CRUD de categorias.
+# Recuperação de senha e Google
+
+Os seguintes endpoints são públicos:
+
+| Método e rota | Corpo / resposta |
+| --- | --- |
+| `GET /OmniCash/auth-options` | `{ "passwordRecovery": true, "googleClientId": "..." }`; valores dependem da configuração. |
+| `POST /OmniCash/esqueci-senha` | `{ "email": "pessoa@exemplo.com" }`; resposta genérica com `message`. |
+| `POST /OmniCash/redefinir-senha` | `{ "token": "token recebido", "password": "NovaSenha123" }`; `message` de sucesso, sem login automático. |
+| `POST /OmniCash/google` | `{ "credential": "ID token do Google" }`; `{ "token": "JWT OmniCash" }`. |
+
+Cadastro e redefinição exigem mínimo de 10 caracteres, maiúscula, minúscula e número,
+com máximo de 72 bytes UTF-8. Senhas anteriores continuam válidas no login.
+Links de recuperação expiram em 30 minutos e só podem ser usados uma vez.
+Consulte [ativação e limitações](mvp-review.md).

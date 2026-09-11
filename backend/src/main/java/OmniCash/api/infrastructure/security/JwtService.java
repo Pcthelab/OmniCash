@@ -29,6 +29,7 @@ public class JwtService {
     public String generateToken(UserDetails userDetails) {
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
+                .claim("credential", PasswordRecoveryService.hash(userDetails.getPassword()))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
@@ -41,7 +42,9 @@ public class JwtService {
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+        return username.equals(userDetails.getUsername()) && !isTokenExpired(token)
+                && PasswordRecoveryService.hash(userDetails.getPassword()).equals(
+                        extractClaim(token, claims -> claims.get("credential", String.class)));
     }
 
     private boolean isTokenExpired(String token) {

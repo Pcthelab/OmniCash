@@ -14,13 +14,35 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<StandardError> handleRuntimeException(RuntimeException e, HttpServletRequest request) {
-        HttpStatus status = HttpStatus.BAD_REQUEST;
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         StandardError err = new StandardError();
         err.setTimestamp(Instant.now());
         err.setStatus(status.value());
-        err.setError("Erro de Negócio / Requisição Inválida");
-        err.setMessage(e.getMessage());
+        err.setError("Erro interno");
+        err.setMessage("Não foi possível concluir a operação. Tente novamente em instantes.");
         err.setPath(request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler({IllegalArgumentException.class, OmniCash.api.domain.exception.EmailAlreadyExistsException.class})
+    public ResponseEntity<StandardError> handleBusinessException(RuntimeException e, HttpServletRequest request) {
+        return error(HttpStatus.BAD_REQUEST, e.getMessage(), request);
+    }
+
+    @ExceptionHandler(org.springframework.security.core.AuthenticationException.class)
+    public ResponseEntity<StandardError> handleAuthenticationException(RuntimeException e, HttpServletRequest request) {
+        return error(HttpStatus.UNAUTHORIZED, "E-mail ou senha incorretos.", request);
+    }
+
+    @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
+    public ResponseEntity<StandardError> handleConflict(RuntimeException e, HttpServletRequest request) {
+        return error(HttpStatus.CONFLICT, "Não foi possível salvar: os dados já existem ou estão em uso. Atualize e tente novamente.", request);
+    }
+
+    private ResponseEntity<StandardError> error(HttpStatus status, String message, HttpServletRequest request) {
+        StandardError err = new StandardError();
+        err.setTimestamp(Instant.now()); err.setStatus(status.value()); err.setError(status.getReasonPhrase());
+        err.setMessage(message); err.setPath(request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
 

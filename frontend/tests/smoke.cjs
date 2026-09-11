@@ -54,6 +54,7 @@ const output = path.resolve(__dirname, "../test-results");
     await page.getByLabel("Seu nome").fill("Marina Teste");
     await page.getByLabel("E-mail", { exact: true }).fill(email);
     await page.getByLabel("Senha", { exact: true }).fill(password);
+    await page.getByLabel("Confirmar senha", { exact: true }).fill(password);
     await page.getByRole("button", { name: "Criar minha conta" }).click();
     await page
       .getByText("Conta criada! Entre com seu e-mail e senha.")
@@ -149,6 +150,11 @@ const output = path.resolve(__dirname, "../test-results");
     await page
       .getByRole("button", { name: "Editar Compras da semana" })
       .waitFor();
+    await page.setViewportSize({ width: 390, height: 844 });
+    for (const width of [320, 360, 390, 720, 1440]) {
+      await page.setViewportSize({ width, height: 844 });
+      assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `Dashboard overflow at ${width}px`);
+    }
     await page.setViewportSize({ width: 390, height: 844 });
     await page.screenshot({
       path: path.join(output, "dashboard-mobile.png"),

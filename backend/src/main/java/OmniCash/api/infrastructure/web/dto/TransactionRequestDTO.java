@@ -13,10 +13,12 @@ import java.time.LocalDate;
 public class TransactionRequestDTO {
 
     @NotBlank(message = "A descrição é obrigatória")
+    @jakarta.validation.constraints.Size(max = 255)
     private String description;
 
     @NotNull(message = "O valor é obrigatório")
     @DecimalMin(value = "0.01", message = "O valor deve ser maior que zero")
+    @jakarta.validation.constraints.Digits(integer = 12, fraction = 2)
     private BigDecimal amount;
 
     @NotNull(message = "O tipo da transação é obrigatório (INCOME ou EXPENSE)")

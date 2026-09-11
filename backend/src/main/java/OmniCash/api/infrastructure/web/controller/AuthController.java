@@ -22,13 +22,16 @@ public class AuthController {
     private final RegisterUserUseCase registerUserUseCase;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    private final org.springframework.security.core.userdetails.UserDetailsService userDetailsService;
 
     public AuthController(RegisterUserUseCase registerUserUseCase,
                           AuthenticationManager authenticationManager,
-                          JwtService jwtService) {
+                          JwtService jwtService,
+                          org.springframework.security.core.userdetails.UserDetailsService userDetailsService) {
         this.registerUserUseCase = registerUserUseCase;
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
+        this.userDetailsService = userDetailsService;
     }
 
     @PostMapping("/cadastro")
@@ -54,7 +57,8 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        // AuthenticationManager erases the password on the authenticated principal.
+        UserDetails userDetails = userDetailsService.loadUserByUsername(authentication.getName());
         String token = jwtService.generateToken(userDetails);
 
         return ResponseEntity.ok(new AuthResponseDTO(token));

@@ -37,6 +37,15 @@ public class UserRepositoryAdapter implements UserRepository {
     }
 
     @Override
+    @org.springframework.transaction.annotation.Transactional
+    public User updateName(Long id, String name) {
+        UserEntity entity = springDataUserRepository.findLockedById(id)
+                .orElseThrow(() -> new OmniCash.api.domain.exception.ResourceNotFoundException("Usuário não encontrado"));
+        entity.setName(name);
+        return mapper.toDomain(springDataUserRepository.save(entity));
+    }
+
+    @Override
     public Optional<User> findByEmail(String email) {
         return springDataUserRepository.findByEmail(email)
                 .map(mapper::toDomain);

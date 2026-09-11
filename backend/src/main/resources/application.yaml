@@ -11,8 +11,14 @@ spring:
     show-sql: true
 
 api:
+  frontend-url: ${FRONTEND_URL:http://localhost:5173}
+  recovery:
+    email-api-key: ${RESEND_API_KEY:}
+    from: ${RECOVERY_EMAIL_FROM:}
+  google:
+    client-id: ${GOOGLE_CLIENT_ID:}
   cors:
     allowed-origins: ${API_CORS_ALLOWED_ORIGINS:https://omnicash.netlify.app,http://localhost:5173}
   security:
     token:
-      secret: 7f9c3b8e2a1d4f6e8c0b2a4d6f8e0c2a4f6b8d0e2a4c6e8f0b2d4f6a8c0e2a4b
+      secret: ${API_SECURITY_TOKEN_SECRET:${random.uuid}${random.uuid}}

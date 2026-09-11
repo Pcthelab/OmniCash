@@ -24,7 +24,9 @@ const navigation = [
   ["profile", "Minha conta", "user"],
 ];
 export default function App() {
-  const [logged, setLogged] = useState(Boolean(getToken()));
+  const [resetToken, setResetToken] = useState(() => new URLSearchParams(window.location.hash.slice(1)).get("reset") || "");
+  const [resetVersion, setResetVersion] = useState(0);
+  const [logged, setLogged] = useState(() => !new URLSearchParams(window.location.hash.slice(1)).has("reset") && Boolean(getToken()));
   const [notice, setNotice] = useState("");
   const [data, setData] = useState(null);
   const [view, setView] = useState("overview");
@@ -58,6 +60,14 @@ export default function App() {
     setCategory("");
     setPage(1);
   }, []);
+  useEffect(() => {
+    const openReset = () => {
+      const token = new URLSearchParams(window.location.hash.slice(1)).get("reset");
+      if (token) { logout(); setResetToken(token); setResetVersion((version) => version + 1); }
+    };
+    window.addEventListener("hashchange", openReset);
+    return () => window.removeEventListener("hashchange", openReset);
+  }, [logout]);
   const load = useCallback(async () => {
     request.current?.abort();
     const controller = new AbortController();
@@ -99,8 +109,11 @@ export default function App() {
   if (!logged)
     return (
       <Auth
+        key={resetToken ? `reset-${resetVersion}` : "auth"}
+        initialResetToken={resetToken}
         notice={notice}
         onLogin={() => {
+          setResetToken("");
           setNotice("");
           setLogged(true);
         }}

@@ -42,9 +42,7 @@ public class UserController {
         User existingUser = userRepository.findByEmail(userDetails.getUsername())
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
-        existingUser.setName(request.getName());
-
-        User updatedUser = userRepository.save(existingUser);
+        User updatedUser = userRepository.updateName(existingUser.getId(), request.getName());
         return ResponseEntity.ok(new UserResponseDTO(updatedUser));
     }
 
