@@ -155,7 +155,7 @@ Google estão preparados e dependem de configuração externa. Consulte a
 
 ## Autor e contato
 
-Desenvolvido por **PcTheLab**. Para conversar sobre produtos, desenvolvimento ou
+Desenvolvido por **PctheLab**. Para conversar sobre produtos, desenvolvimento ou
 oportunidades profissionais, entre em contato pelo
 [LinkedIn](https://www.linkedin.com/in/pcthelab) e conheça outros projetos no
 [GitHub](https://github.com/Pcthelab).
