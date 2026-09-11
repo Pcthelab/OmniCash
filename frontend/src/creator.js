@@ -1,5 +1,5 @@
 export const creator = {
-  name: "PcTheLab",
+  name: "Pcthelab",
   links: [
     {
       label: "GitHub",
