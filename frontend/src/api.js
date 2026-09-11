@@ -1,5 +1,11 @@
 const TOKEN_KEY = "omnicash.token";
-const base = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
+const rawBase = import.meta.env?.VITE_API_URL || "";
+export const normalizeApiBase = (value) => {
+  const trimmed = value.trim();
+  const markdownLink = trimmed.match(/^\[?(https?:\/\/[^\]\s)]+)\]?(?:\([^)]*\))?$/);
+  return (markdownLink?.[1] || trimmed).replace(/\/$/, "");
+};
+const base = normalizeApiBase(rawBase);
 export const getToken = () => localStorage.getItem(TOKEN_KEY);
 export const setToken = (token) => localStorage.setItem(TOKEN_KEY, token);
 export const clearToken = () => localStorage.removeItem(TOKEN_KEY);
