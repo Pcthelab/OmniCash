@@ -26,6 +26,7 @@ o banco `omnicash_test` em `localhost:5433`, com credenciais de desenvolvimento.
 | `SPRING_DATASOURCE_URL` | URL JDBC do banco externo |
 | `SPRING_DATASOURCE_USERNAME` | Usuário do banco |
 | `SPRING_DATASOURCE_PASSWORD` | Senha do banco |
+| `API_CORS_ALLOWED_ORIGINS` | Origens liberadas para o frontend, separadas por vírgula |
 | `API_SECURITY_TOKEN_SECRET` | Chave JWT, ao menos 32 bytes para HS256 |
 | `SPRING_DOCKER_COMPOSE_ENABLED` | `false` ao usar banco externo |
 | `SPRING_JPA_HIBERNATE_DDL_AUTO` | Estratégia de esquema, atualmente `update` |
@@ -34,6 +35,15 @@ Para banco externo, desative Compose e configure a conexão no processo Java.
 O Spring não carrega um arquivo `.env` automaticamente.
 O perfil normal usa `update`; o perfil `test` usa H2 com `create-drop`.
 O inicializador adiciona categorias padrão ausentes e preserva as existentes.
+
+Em deploy separado, como Netlify + Render, configure no Render:
+
+```text
+API_CORS_ALLOWED_ORIGINS=https://omnicash.netlify.app
+SPRING_DOCKER_COMPOSE_ENABLED=false
+```
+
+Use as variáveis `SPRING_DATASOURCE_*` com os dados JDBC do Neon.
 
 ## Testes e pacote
 

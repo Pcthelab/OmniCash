@@ -31,6 +31,15 @@ para as rotas abaixo. `VITE_API_URL` pode apontar para outra origem no build, ma
 nesse caso o backend precisa permitir essa origem por CORS. O proxy de desenvolvimento
 não é incluído no build nem no comando `vite preview`.
 
+No Netlify, configure:
+
+```text
+VITE_API_URL=https://omnicash-gj66.onrender.com
+```
+
+Depois faça um novo deploy. Essa variável é aplicada durante o build, então mudar
+o painel sem redeploy não altera o JavaScript já publicado.
+
 ## Organização
 
 - `src/api.js`: cliente HTTP, token Bearer, erros e contratos da API.

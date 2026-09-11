@@ -33,6 +33,8 @@ serviços ativos; ele cria e remove sua própria conta temporária.
 | Porta 8080 ocupada | Confira se a API já está ativa no IntelliJ |
 | Frontend antigo | Abra a URL informada pelo Vite e atualize com Ctrl+F5 |
 | Requisições falham | Confira API na porta 8080 e proxy do Vite |
+| Netlify abre, mas login falha | Confira `VITE_API_URL` no Netlify e `API_CORS_ALLOWED_ORIGINS` no Render |
+| Erro CORS no navegador | O Render precisa aceitar `https://omnicash.netlify.app` e liberar `OPTIONS` |
 | Token inválido após mudar chave | Faça login novamente |
 
 ## Entrega em produção
@@ -44,6 +46,17 @@ Configure o servidor HTTP para encaminhar `/OmniCash`, `/usuario`, `/categories`
 e `/lancamento` à API. O proxy Vite não acompanha o build. Outra origem exige
 `VITE_API_URL` no build e configuração CORS no backend. Variáveis `VITE_*` são
 públicas e não devem conter segredos.
+
+Para Netlify + Render + Neon:
+
+- Netlify: `VITE_API_URL=https://omnicash-gj66.onrender.com`
+- Render: `API_CORS_ALLOWED_ORIGINS=https://omnicash.netlify.app`
+- Render: `SPRING_DOCKER_COMPOSE_ENABLED=false`
+- Render: `SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME` e
+  `SPRING_DATASOURCE_PASSWORD` com os dados JDBC do Neon
+
+Depois de alterar `VITE_API_URL`, publique um novo build no Netlify; variáveis
+do Vite são gravadas no JavaScript durante o build.
 
 Próximos passos para uma operação comercial:
 
