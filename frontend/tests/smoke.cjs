@@ -64,6 +64,7 @@ const output = path.resolve(__dirname, "../test-results");
     await page.getByText("E-mail ou senha incorretos.").waitFor();
     await page.getByLabel("Senha", { exact: true }).fill(password);
     await page.getByRole("button", { name: "Entrar na minha conta" }).click();
+    await page.getByRole("button", { name: "Ver lançamentos" }).click();
     await page
       .getByRole("heading", { name: "Comece com seu primeiro lançamento" })
       .waitFor();
@@ -147,9 +148,7 @@ const output = path.resolve(__dirname, "../test-results");
     await page
       .getByRole("heading", { name: "Olá, Marina. Vamos organizar?" })
       .waitFor();
-    await page
-      .getByRole("button", { name: "Editar Compras da semana" })
-      .waitFor();
+    await page.getByRole("button", { name: "Ver lançamentos" }).waitFor();
     await page.setViewportSize({ width: 390, height: 844 });
     for (const width of [320, 360, 390, 720, 1440]) {
       await page.setViewportSize({ width, height: 844 });

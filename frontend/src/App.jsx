@@ -151,6 +151,7 @@ export default function App() {
     setType("");
     setCategory("");
     setPage(1);
+    window.scrollTo({ top: 0, behavior: "instant" });
   };
   return (
     <div className="app-layout">
@@ -161,6 +162,7 @@ export default function App() {
           {navigation.map(([id, label, icon]) => (
             <button
               key={id}
+              aria-label={label}
               aria-current={view === id ? "page" : undefined}
               className={view === id ? "selected" : ""}
               onClick={() => changeView(id)}
@@ -325,7 +327,7 @@ export default function App() {
                   {loading ? "Atualizando…" : "Atualizar dados"}
                 </button>
               </div>
-              <section className="stats-grid" aria-label="Resumo financeiro">
+              {view === "overview" && <section className="stats-grid" aria-label="Resumo financeiro">
                 <article className="stat-card balance-card">
                   <div>
                     <span>Saldo do período</span>
@@ -377,21 +379,39 @@ export default function App() {
                         : "As despesas superaram as receitas"}
                   </small>
                 </article>
-              </section>
-              {view !== "transactions" && (
+              </section>}
+              {view === "overview" && (
+                <div className="overview-grid">
+                  <section className="panel overview-shortcuts" aria-label="Explore seu espaço">
+                    <span className="eyebrow">CADA COISA NO SEU LUGAR</span>
+                    <h2>O essencial, por aqui.</h2>
+                    <p>Consulte seu saldo acima e escolha o que quer fazer agora.</p>
+                    <button className="overview-link" onClick={() => changeView("transactions")}>
+                      <Icon name="transfer" />
+                      <span><strong>Ver lançamentos</strong><small>Busque, filtre e organize suas entradas e saídas.</small></span>
+                      <span aria-hidden="true">→</span>
+                    </button>
+                    <button className="overview-link" onClick={() => changeView("reports")}>
+                      <Icon name="chart" />
+                      <span><strong>Explorar relatórios</strong><small>Acompanhe a evolução do seu dinheiro e exporte os dados.</small></span>
+                      <span aria-hidden="true">→</span>
+                    </button>
+                  </section>
+                  <CategoryChart rows={periodRows} />
+                </div>
+              )}
+              {view === "reports" && (
                 <div className="charts-grid">
                   <FlowChart rows={rows} month={month} />
                   <CategoryChart rows={periodRows} />
                 </div>
               )}
-              {view !== "reports" ? (
+              {view === "transactions" && (
                 <section className="panel transactions-panel">
                   <div className="panel-heading">
                     <div>
                       <h2>
-                        {view === "overview"
-                          ? "Últimos lançamentos"
-                          : "Todos os lançamentos"}
+                        Todos os lançamentos
                       </h2>
                       <p>
                         {filtered.length}{" "}
@@ -507,7 +527,8 @@ export default function App() {
                     </div>
                   )}
                 </section>
-              ) : (
+              )}
+              {view === "reports" && (
                 <section className="report-banner">
                   <div>
                     <h2>Seus números, com você.</h2>
