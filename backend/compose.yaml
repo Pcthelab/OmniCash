@@ -1,3 +1,4 @@
+# Credenciais públicas apenas para desenvolvimento local. Não reutilizar em produção.
 services:
   postgres:
     image: 'postgres:latest'

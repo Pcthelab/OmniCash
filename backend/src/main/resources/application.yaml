@@ -1,3 +1,4 @@
+# Padrões locais. Configure SPRING_DATASOURCE_* e API_SECURITY_TOKEN_SECRET no provedor em produção.
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5433/omnicash_test

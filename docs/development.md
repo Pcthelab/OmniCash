@@ -67,6 +67,20 @@ Próximos passos para uma operação comercial:
 - Uniformizar validação de criação/edição, compatibilidade de tipo e categoria e erros.
 - Ampliar testes de autorização e isolamento entre usuários.
 - Configurar HTTPS, observabilidade e automação de build/testes/deploy.
-- Definir recuperação de senha, política de sessão e exclusão de dados.
+- Homologar a entrega de recuperação de senha, revisar política de sessão e exclusão de dados.
 
 São evoluções documentadas, não funcionalidades entregues pela organização de pastas.
+
+## O que versionar
+
+Mantenha código-fonte, testes, documentação, imagens de apresentação em `docs/images/`,
+Maven Wrapper, lockfile npm e configurações públicas necessárias para execução.
+Arquivos `.env.example` devem conter apenas exemplos sem credenciais privadas.
+
+`output/` e `tmp/` ficam reservados ao trabalho local: currículos, capturas temporárias
+e arquivos gerados não pertencem ao produto. Dependências, builds, relatórios de
+testes, configurações privadas e chaves são ignorados pelo `.gitignore`.
+
+Antes de publicar, confira `git status --short` e `git diff --cached --stat`.
+Adicionar uma regra ao `.gitignore` não remove arquivos já versionados nem apaga
+seu histórico. Para segredos expostos, siga [SECURITY.md](../SECURITY.md).

@@ -45,3 +45,22 @@ test-results/
 .DS_Store
 Thumbs.db
 coverage/
+
+### Personal artifacts, temporary work and private material ###
+/output/
+/tmp/
+*.bak
+*.tmp
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.dump
+*.sql.gz
+*.sqlite
+*.sqlite3
+application-local.yaml
+application-local.yml
+application-local.properties

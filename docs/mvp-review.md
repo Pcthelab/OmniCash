@@ -1,6 +1,10 @@
-# Revisão do MVP — 11/09/2026
+# Revisão do MVP — atualizada em 13/09/2026
 
 ## Implementado
+
+- Navegação por áreas: início com resumo financeiro, lançamentos em tela dedicada e análises em relatórios.
+- Layout revisado: saldo em destaque, cards padronizados, textos mais diretos e total das despesas fora do gráfico circular para acomodar valores grandes.
+- Formulário: valor e data em uma coluna até 720px, limites explícitos para o controle nativo, foco inicial no título e restauração de rolagem no fechamento.
 
 - Celular: campos de 16px, alvos de toque de 44–48px, navegação com área segura para iPhone, formulários compactos, quebra de descrições/valores longos e melhor leitura nos cartões. A composição do desktop foi preservada.
 - Cadastro e redefinição: mínimo de 10 caracteres, maiúscula A–Z, minúscula a–z e número; limite de 72 bytes UTF-8 do BCrypt. Confirmação, requisitos visíveis e botão para mostrar senha. O login continua aceitando senhas antigas.
@@ -42,7 +46,7 @@ Os testes usam H2 em memória; nenhum dado de produção foi alterado. A suíte 
 
 `frontend/tests/smoke.cjs` percorre o fluxo financeiro com API local real. `frontend/tests/auth-mobile.cjs` valida cadastro, recuperação e redefinição em 320, 360, 390, 720 e 1440px, com API simulada e sem enviar e-mail. Execute ambos com Playwright disponível (`PLAYWRIGHT_MODULE` pode indicar o módulo), `E2E_URL` e, no smoke, `E2E_API_URL` apontando para ambientes locais de teste.
 
-O login Google com uma conta real e a entrega do e-mail ainda precisam ser homologados após configurar as credenciais. Os testes de viewport usam Chromium/Edge, não um aparelho iOS físico.
+O login Google com uma conta real e a entrega do e-mail ainda precisam ser homologados após configurar as credenciais. `frontend/tests/layout.cjs` cobre dez larguras de 320 a 1440px com API simulada, no Chromium/Edge e WebKit, incluindo foco, campo de data, alinhamento, salvamento e altura reduzida. WebKit de teste não equivale a um aparelho iOS físico.
 
 ## Referências de integração
 

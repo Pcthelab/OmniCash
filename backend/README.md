@@ -30,11 +30,20 @@ o banco `omnicash_test` em `localhost:5433`, com credenciais de desenvolvimento.
 | `API_SECURITY_TOKEN_SECRET` | Chave JWT, ao menos 32 bytes para HS256 |
 | `SPRING_DOCKER_COMPOSE_ENABLED` | `false` ao usar banco externo |
 | `SPRING_JPA_HIBERNATE_DDL_AUTO` | Estratégia de esquema, atualmente `update` |
+| `FRONTEND_URL` | Origem do frontend para links de recuperação |
+| `RESEND_API_KEY` | Chave privada do serviço de envio de e-mail |
+| `RECOVERY_EMAIL_FROM` | Remetente verificado no Resend |
+| `GOOGLE_CLIENT_ID` | Client ID OAuth Web, usado para validar tokens Google |
 
 Para banco externo, desative Compose e configure a conexão no processo Java.
 O Spring não carrega um arquivo `.env` automaticamente.
 O perfil normal usa `update`; o perfil `test` usa H2 com `create-drop`.
 O inicializador adiciona categorias padrão ausentes e preserva as existentes.
+
+Sem chave JWT configurada, o ambiente local gera uma chave aleatória por inicialização.
+Em produção, configure um segredo privado estável: reiniciar com outra chave invalida
+as sessões. Recuperação e Google ficam indisponíveis sem suas configurações.
+Consulte [ativação das integrações](../docs/mvp-review.md) e [segurança](../SECURITY.md).
 
 Em deploy separado, como Netlify + Render, configure no Render:
 

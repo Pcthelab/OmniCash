@@ -25,7 +25,7 @@ Cadastro, login, opções de autenticação, recuperação de senha e login Goog
 {
   "name": "Ana Silva",
   "email": "ana@example.com",
-  "password": "uma-senha-pessoal"
+  "password": "ExemploLocal123!"
 }
 ```
 
@@ -60,8 +60,10 @@ PATCH parcial:
 ```
 
 PATCH aceita `description`, `amount`, `type` e `date`; nulos mantêm o valor atual.
-Não aceita alteração de categoria. Ainda não aplica as mesmas validações
-declarativas do POST; validação da interface não substitui a do servidor.
+Não aceita alteração de categoria. Valida descrição não vazia de até 255 caracteres,
+valor mínimo `0.01` com até duas casas decimais e tipo `INCOME` ou `EXPENSE` quando
+esses campos são enviados. A compatibilidade entre o novo tipo e a categoria
+mantida ainda é uma pendência.
 
 Não há filtros ou paginação HTTP: o frontend processa a lista localmente.
 O saldo da API abrange todo o histórico do usuário.
@@ -69,14 +71,16 @@ O saldo da API abrange todo o histórico do usuário.
 ## Erros e limites
 
 O handler retorna `timestamp`, `status`, `error`, `message` e `path`: 422 para
-validação de DTO, 404 para `ResourceNotFoundException` e 400 para exceções de
-execução tratadas genericamente. Erros de segurança podem ter outro formato;
+validação de DTO, 404 para `ResourceNotFoundException`, 400 para argumentos inválidos
+ou e-mail duplicado, 401 para falha de autenticação, 409 para conflito de integridade
+e 500 genérico para outras exceções de execução. Erros de segurança podem ter outro formato;
 nem todo recurso ausente é convertido em 404 atualmente.
 
 Exclusão de conta existe somente na API. Não há contrato de cascata documentado;
 o smoke test remove seus lançamentos antes da conta. Não há refresh token,
-recuperação de senha, integração bancária nem CRUD de categorias.
-# Recuperação de senha e Google
+integração bancária nem CRUD de categorias.
+
+## Recuperação de senha e Google
 
 Os seguintes endpoints são públicos:
 

@@ -49,8 +49,22 @@ o painel sem redeploy não altera o JavaScript já publicado.
 - `src/creator.js`: assinatura do criador e link de portfólio/LinkedIn.
 - `src/App.jsx`: sessão, carregamento, navegação e composição do painel.
 - `src/App.css` e `src/index.css`: estilos responsivos e tokens visuais.
+- `src/workspace.css`: padrões dos cards, hierarquia visual e correções do formulário mobile.
 - `tests/finance.test.js`: cálculos, valores decimais, filtros e segurança do CSV.
 - `tests/smoke.cjs`: fluxo completo no navegador usando a API real.
+- `tests/layout.cjs`: navegação, cards, data e salvamento com API simulada em dez larguras.
+- `tests/auth-mobile.cjs`: cadastro, recuperação e redefinição em viewports móveis.
+
+## Telas
+
+- **Visão geral:** resumo do período, despesas por categoria e atalhos.
+- **Lançamentos:** lista dedicada, busca, filtros, paginação e exportação CSV.
+- **Relatórios:** fluxo de seis meses, distribuição por categoria e exportação do período.
+- **Minha conta:** edição do nome e encerramento da sessão.
+
+No celular, a navegação fica na parte inferior. O formulário usa valor e data em
+uma coluna, com controles de largura limitada ao card. O modal recebe foco no
+título ao abrir, preserva o seletor nativo de data e libera a rolagem ao fechar.
 
 ## Contratos usados
 
@@ -91,10 +105,11 @@ conta temporária depois de apagar seus lançamentos.
 - CSV exporta todas as linhas filtradas, inclusive outras páginas, e escapa células
   com aspas e possíveis fórmulas. A lista exibe oito registros por página.
 - Modais usam o elemento nativo `dialog`, com foco contido e fechamento por Escape.
-- Sem endpoint de metas, recuperação de senha ou criação de categorias, esses
-  recursos não são simulados na interface.
+- Recuperação de senha e login Google usam os endpoints documentados no
+  [guia da API](../docs/api.md#recuperação-de-senha-e-google) e dependem de configuração externa.
+- Metas e criação de categorias não estão implementadas.
 
-## Teste de navegador
+## Testes de navegador
 
 O smoke test precisa de Playwright e Microsoft Edge instalados, com frontend e
 backend em execução. `PLAYWRIGHT_MODULE` permite usar um módulo Playwright existente
@@ -108,3 +123,23 @@ node tests/smoke.cjs
 `E2E_URL` e `E2E_API_URL` permitem alterar os endereços padrão. O teste cria uma
 conta com e-mail aleatório `@example.test`, testa operações reais e remove a conta
 e seus lançamentos ao final. Capturas e CSV ficam em `test-results/`, ignorado no Git.
+
+Para layout e autenticação, basta o Vite ativo: a API é simulada, sem dados de produção.
+Disponibilize Playwright e o navegador desejado no ambiente de desenvolvimento.
+Execute os comandos abaixo dentro de `frontend/`:
+
+```powershell
+node tests/layout.cjs
+node tests/auth-mobile.cjs
+
+# WebKit instalado pelo CLI da sua instalação do Playwright:
+$env:E2E_BROWSER = "webkit"
+node tests/layout.cjs
+Remove-Item Env:E2E_BROWSER
+```
+
+`layout.cjs` usa Edge por padrão e WebKit quando `E2E_BROWSER=webkit`.
+Ele verifica 320, 360, 375, 390, 414, 480, 720, 768, 1024 e 1440 px, incluindo
+conteúdo longo, data dentro do campo, alinhamento, foco e salvamento com pouca
+altura disponível. `auth-mobile.cjs` usa Edge. Esses testes não substituem
+homologação em dispositivos físicos nem integração real de Google/e-mail.
