@@ -47,7 +47,7 @@ export default function TransactionForm({
       busy={busy}
       onClose={onClose}
     >
-      <form className="form-stack" onSubmit={submit}>
+      <form className="form-stack transaction-form" onSubmit={submit}>
         <div className="segmented">
           {[
             ["EXPENSE", "Despesa"],
@@ -74,7 +74,6 @@ export default function TransactionForm({
           Descrição
           <input
             name="description"
-            autoFocus
             required
             maxLength={255}
             defaultValue={transaction?.description}
@@ -140,18 +139,18 @@ export default function TransactionForm({
         )}
         <div className="modal-actions">
           <button
+            className="primary"
+            disabled={busy || (!editing && !options.length)}
+          >
+            {busy ? "Salvando…" : "Salvar lançamento"}
+          </button>
+          <button
             className="secondary"
             type="button"
             disabled={busy}
             onClick={onClose}
           >
             Cancelar
-          </button>
-          <button
-            className="primary"
-            disabled={busy || (!editing && !options.length)}
-          >
-            {busy ? "Salvando…" : "Salvar lançamento"}
           </button>
         </div>
       </form>

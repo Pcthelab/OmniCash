@@ -17,6 +17,7 @@ import {
 } from "./lib/finance";
 import { creator } from "./creator";
 import "./App.css";
+import "./workspace.css";
 const navigation = [
   ["overview", "Visão geral", "grid"],
   ["transactions", "Lançamentos", "transfer"],
@@ -221,17 +222,17 @@ export default function App() {
             <div>
               <span className="eyebrow">
                 {view === "overview"
-                  ? "UM OLHAR PARA O SEU DINHEIRO"
-                  : "MAIS CLAREZA, TODOS OS DIAS"}
+                  ? `Olá${data ? `, ${data.user.name.split(" ")[0]}` : ""}`
+                  : "MEU ESPAÇO"}
               </span>
               <h1>
                 {view === "overview"
-                  ? `Olá${data ? `, ${data.user.name.split(" ")[0]}` : ""}. Vamos organizar?`
+                  ? "Seu resumo financeiro"
                   : navigation.find(([id]) => id === view)[1]}
               </h1>
               <p>
                 {view === "overview"
-                  ? "Acompanhe seus movimentos. Abra espaço para suas conquistas."
+                  ? "Saldo, entradas e saídas em um só olhar."
                   : view === "transactions"
                     ? "Cada entrada e saída, no lugar certo."
                     : view === "reports"
@@ -383,17 +384,15 @@ export default function App() {
               {view === "overview" && (
                 <div className="overview-grid">
                   <section className="panel overview-shortcuts" aria-label="Explore seu espaço">
-                    <span className="eyebrow">CADA COISA NO SEU LUGAR</span>
-                    <h2>O essencial, por aqui.</h2>
-                    <p>Consulte seu saldo acima e escolha o que quer fazer agora.</p>
+                    <h2>Acesso rápido</h2>
                     <button className="overview-link" onClick={() => changeView("transactions")}>
                       <Icon name="transfer" />
-                      <span><strong>Ver lançamentos</strong><small>Busque, filtre e organize suas entradas e saídas.</small></span>
+                      <span><strong>Ver lançamentos</strong><small>Consulte e organize suas movimentações.</small></span>
                       <span aria-hidden="true">→</span>
                     </button>
                     <button className="overview-link" onClick={() => changeView("reports")}>
                       <Icon name="chart" />
-                      <span><strong>Explorar relatórios</strong><small>Acompanhe a evolução do seu dinheiro e exporte os dados.</small></span>
+                      <span><strong>Explorar relatórios</strong><small>Veja sua evolução e exporte os dados.</small></span>
                       <span aria-hidden="true">→</span>
                     </button>
                   </section>

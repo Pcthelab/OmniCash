@@ -146,7 +146,7 @@ const output = path.resolve(__dirname, "../test-results");
     assert.equal((await api("/usuario/me")).name, "Marina Atualizada");
     await page.reload();
     await page
-      .getByRole("heading", { name: "Olá, Marina. Vamos organizar?" })
+      .getByRole("heading", { name: "Seu resumo financeiro" })
       .waitFor();
     await page.getByRole("button", { name: "Ver lançamentos" }).waitFor();
     await page.setViewportSize({ width: 390, height: 844 });

@@ -123,10 +123,11 @@ export function CategoryChart({ rows }) {
             aria-label={`Total de despesas: ${money(total / 100)}`}
           >
             <div>
-              <small>Total de despesas</small>
-              <strong>{money(total / 100)}</strong>
+              <strong>Despesas</strong>
+              <small>por categoria</small>
             </div>
           </div>
+          <p className="category-total"><span>Total no período</span><strong>{money(total / 100)}</strong></p>
           <div className="category-legend">
             {groups.map(([name, value], i) => (
               <div key={name}>
